@@ -36,7 +36,7 @@ Views we are going to implement:
 
 
 
-<b>Different models could be:</b>  games, developers, players, game sessions, transaction  
+Different models could be:  games, developers, players, game sessions, transaction  
 
 - <b>Game:</b> name, URL, current high score, price
 
