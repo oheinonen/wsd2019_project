@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 import hello.views
-import wsdproject
+import wsdproject.views
 
 # To add a new path, first import the app:
 # import blog
