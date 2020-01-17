@@ -16,6 +16,6 @@ import wsdproject.views
 
 urlpatterns = [
     path("", wsdproject.views.index, name="index"),
-    path("db/", wsdproject.views.db, name="db"),
-    path("admin/", admin.site.urls),
+    #path("db/", wsdproject.views.db, name="db"),
+    #path("admin/", admin.site.urls),
 ]
