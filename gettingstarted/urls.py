@@ -16,7 +16,7 @@ import wsdproject
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 urlpatterns = [
-    path("", hello.views.index, name="index"),
+    path("", wsdproject.views.index, name="index"),
     #path("db/", wsdproject.views.db, name="db"),
     #path("admin/", admin.site.urls),
 ]
