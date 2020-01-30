@@ -4,15 +4,37 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Django Game Store{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <main>
-        <h1>Django Game Store</h1>
-        <a href="{% url 'home' %}">home</a>
-        {% block content %}
-        {% endblock %}
-    </main>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Django Gamestore</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">Browse Games</a></li>
+        <li><a href="#">Highscores</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'signup'}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="{% url 'login'}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+      <h1>Django Game Store</h1>
+      <a href="{% url 'home' %}">home</a>
+      {% block content %}
+      {% endblock %}
+  </main>
 </body>
 
 </html>
