@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import Game
+from users.models import CustomUser
 from django.views.generic import (
     ListView,
     DetailView,
@@ -23,6 +24,15 @@ class GameListView(ListView):
     model = Game
     template_name = 'home.html'
     context_object_name = 'games'
+
+class UserGameListView(ListView):
+    model = Game
+    template_name = 'gamestore/user_stats.html'
+    context_object_name = 'games'
+
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
+        return Game.objects.filter(developer=user)
 
 class GameDetailView(DetailView):
     model = Game

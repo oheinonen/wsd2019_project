@@ -5,12 +5,14 @@ from .views import (
     GameListView,
     GameCreateView,
     GameDeleteView,
-    GameUpdateView
+    GameUpdateView,
+    UserGameListView
     )
 from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('user/<str:username>',UserGameListView.as_view(),name='user-stats' ),
     path('game/add/',GameCreateView.as_view(),name='game-add' ),
     path('game/<str:pk>/',GameDetailView.as_view(),name='game-detail' ),
     path('game/<str:pk>/update/',GameUpdateView.as_view(),name='game-update'),

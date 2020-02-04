@@ -22,7 +22,8 @@
         <li><a href="#">Highscores</a></li>
         {% if user.is_authenticated %}
           {% if user.usertype == "['dev']" %}
-            <li><a href="{% url 'game-add' %}">Add new game</a></li>
+          <li><a href="{% url 'game-add' %}">Add new game</a></li>
+          <li><a href="{% url 'user-stats' user.username %}">View Sales Stats</a></li>
           {% endif %}
         {% endif %}
       </ul>
