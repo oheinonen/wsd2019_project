@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content%}
+  <div>
+    <form method="POST">
+      {% csrf_token %}
+        <legend class="border-bottom mb-4">Delete Game</legend>
+        <h2>Are you sure you want to delete the game "{{ object.title }}?"</h2>
+      <div>
+        <button type="submit" class="btn btn-outline-danger">Yes, Delete</button>
+        <a class="btn btn-outline-secondary" href="/game/{{ object.pk }}">Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock content%}
