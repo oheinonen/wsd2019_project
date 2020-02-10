@@ -4,16 +4,16 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
 
   {% for game in games %}
-  <h1>{{ game.name }}</h1>
-    <div class="">
-      <a href="{% url 'game-detail' game.pk %}"> Play {{ game.name }} here!</a>
-    </div>
-    <<iframe src="{{ game.url }}" width="" height=""></iframe>
-    <h2>Game developed by {{ game.developer }}</h2>
+    <h1>{{ game.name }}</h1>
+    {% if game.is_bought %}
+      <iframe src="{{ object.url }}" width="" height=""></iframe>
+    {% else %}
+      <h2>You need to buy game to play it!</h2>
+      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
+    {% endif %}
+    <h3>Game developed by {{ game.developer }}</h3>
 
   {% endfor %}
 

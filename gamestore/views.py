@@ -19,6 +19,7 @@ def home(request):
         'games' : Game.objects.all()
     }
     return render(request, "home.html",context)
+    
 
 class GameListView(ListView):
     model = Game
@@ -36,6 +37,7 @@ class UserGameListView(ListView):
 
 class GameDetailView(DetailView):
     model = Game
+    template_name = 'gamestore/detail.html'
 
 class GameCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Game

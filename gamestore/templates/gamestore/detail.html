@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ object.name }}</h1>
+  <h2>Game developed by {{ object.developer }}</h2>
+  {% if object.developer == user %}
+    <iframe src="{{ object.url }}" width="" height=""></iframe>
+    <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Delete</a>
+  {% elif user.usertype == "['player']" %}
+    {% if object.is_bought %}
+      <iframe src="{{ object.url }}" width="" height=""></iframe>
+    {% else %}
+      <h2>You need to buy game to play it!</h2>
+      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
+    {% endif %}
+  {% endif %}
+{% endblock %}
