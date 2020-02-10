@@ -10,11 +10,13 @@
     <h1>{{ game.name }}</h1>
 
     {% for score in highscores %}
-      {{ forloop.counter }}
-      {{ score }}
-      <br>
 
-      {% endfor %}
+      {% if score.game == game %}
+        {{ score }}
+        <br>
+      {% endif %}
+      
+    {% endfor %}
 
   {% endfor %}
 
