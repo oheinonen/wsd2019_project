@@ -29,6 +29,10 @@ def highscore(request, pk):
     else:
         return HttpResponse("unsuccessful")
 
+def games_list(request, filter_by):
+    games = Game.objects.all()
+    return render(request, 'gamestore/browse_games.html', {'game_list': games})
+
 class GameListView(ListView):
     model = Game
     template_name = 'gamestore/browse_games.html'

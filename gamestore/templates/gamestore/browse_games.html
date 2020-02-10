@@ -5,5 +5,8 @@
 {% block content %}
 
 <h2>List of released games:</h2>
-  games = Game.All()
+{% for game in game_list %}
+        <h3>{{ game.name }}</h3>
+{% endfor %}
+
 {% endblock %}
