@@ -17,6 +17,6 @@ urlpatterns = [
     path('game/<str:pk>/',GameDetailView.as_view(),name='game-detail' ),
     path('game/<str:pk>/highscore/', views.highscore,name='highscore' ),
     path('game/<str:pk>/update/',GameUpdateView.as_view(),name='game-update'),
-    path('game/<str:pk>/delete/',GameDeleteView.as_view(),name='game-delete')
-
+    path('game/<str:pk>/delete/',GameDeleteView.as_view(),name='game-delete'),
+    path('browsegames/',GameListView.as_view(),name='game-list' )
 ]

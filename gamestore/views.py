@@ -29,7 +29,7 @@ def highscore(request, pk):
 
 class GameListView(ListView):
     model = Game
-    template_name = 'home.html'
+    template_name = 'gamestore/browse_games.html'
     context_object_name = 'games'
 
 class UserGameListView(ListView):
