@@ -18,19 +18,31 @@
         window.addEventListener('message', function(event) {
           switch (event.data.messageType) {
             case "SCORE":
+              $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/game/{{game.name}}/highscore/',
+                data: {
+                  score: event.data.score
+                },
+                success: function (data) {
+                  alert(`Game over! Your score is ${event.data.score}.`);
+                }
+              });
               break;
             case "SAVE":
+            alert(`Game save failed`);
               break;
             case "LOAD_REQUEST":
+            alert(`Load request failed`);
+
               break;
             case "SETTING":
-              alert(`Game from ${event.origin} loaded. Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
+              alert(`Game from ${event.origin} loaded.Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
               break;
-            default:
-              alert('something went wrong');
           };
         });
       </script>
+
       <h2>You need to buy game to play it!</h2>
       <button type="submit" name="buyGame" method="post">Buy Game Here</button>
   {% endif %}
