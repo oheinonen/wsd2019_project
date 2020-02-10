@@ -26,6 +26,8 @@ def highscore(request, pk):
         hs = Highscore( game=game,player=request.user, score = request.GET['score'] )
         hs.save()
         return HttpResponse('success')
+    else:
+        return HttpResponse("unsuccessful")
 
 class GameListView(ListView):
     model = Game
