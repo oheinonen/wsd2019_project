@@ -11,11 +11,27 @@
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Update</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Delete</a>
   {% elif user.usertype == "['player']" %}
-    {% if object.is_bought %}
-      <iframe src="{{ object.url }}" width="" height=""></iframe>
-    {% else %}
+
+
+      <iframe id="iframe" src="{{ object.url }}" width="" height=""></iframe>
+      <script>
+        window.addEventListener('message', function(event) {
+          switch (event.data.messageType) {
+            case "SCORE":
+              break;
+            case "SAVE":
+              break;
+            case "LOAD_REQUEST":
+              break;
+            case "SETTING":
+              alert(`Game from ${event.origin} loaded. Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
+              break;
+            default:
+              alert('something went wrong');
+          };
+        });
+      </script>
       <h2>You need to buy game to play it!</h2>
       <button type="submit" name="buyGame" method="post">Buy Game Here</button>
-    {% endif %}
   {% endif %}
 {% endblock %}

@@ -9,7 +9,7 @@ class Game(models.Model):
     url = models.URLField(max_length=255)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     developer = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
-    is_bought = models.BooleanField(default=False)
+    is_bought = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
