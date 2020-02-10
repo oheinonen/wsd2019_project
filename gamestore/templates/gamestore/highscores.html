@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Global Highscores {% endblock %}
+
+{% block content %}
+
+  <h2>List of Highscores </h2>
+
+  {% for game in games %}
+    <h1>{{ game.name }}</h1>
+
+    {% for score in highscores %}
+      {{ forloop.counter }}
+      {{ score }}
+      <br>
+
+      {% endfor %}
+
+  {% endfor %}
+
+{% endblock %}
