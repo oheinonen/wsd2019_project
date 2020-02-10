@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ object.name }}</h1>
+  <h2>Game developed by {{ object.developer }}</h2>
+  {% if object.developer == user %}
+    <iframe src="{{ object.url }}" width="" height=""></iframe>
+    <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Delete</a>
+  {% elif user.usertype == "['player']" %}
+
+
+      <iframe id="iframe" src="{{ object.url }}" width="" height=""></iframe>
+      <script>
+        window.addEventListener('message', function(event) {
+          switch (event.data.messageType) {
+            case "SCORE":
+              $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/game/{{game.name}}/highscore/',
+                data: {
+                  score: event.data.score
+                },
+                success: function (data) {
+                  alert(`Game over! Your score is ${event.data.score}.`);
+                }
+              });
+              break;
+            case "SAVE":
+            alert(`Game save failed`);
+              break;
+            case "LOAD_REQUEST":
+            alert(`Load request failed`);
+
+              break;
+            case "SETTING":
+              alert(`Game from ${event.origin} loaded.Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
+              break;
+          };
+        });
+      </script>
+
+      <h2>You need to buy game to play it!</h2>
+      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
+  {% endif %}
+{% endblock %}
