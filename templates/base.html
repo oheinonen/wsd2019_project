@@ -18,7 +18,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="#">Browse Games</a></li>
+        <li><a href="{% url 'game-list'%}">Browse Games</a></li>
         <li><a href="#">Highscores</a></li>
         {% if user.is_authenticated %}
           {% if user.usertype == "['dev']" %}

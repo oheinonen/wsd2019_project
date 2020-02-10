@@ -19,11 +19,11 @@ def home(request):
         'games' : Game.objects.all()
     }
     return render(request, "home.html",context)
-    
+
 
 class GameListView(ListView):
     model = Game
-    template_name = 'home.html'
+    template_name = 'gamestore/browse_games.html'
     context_object_name = 'games'
 
 class UserGameListView(ListView):

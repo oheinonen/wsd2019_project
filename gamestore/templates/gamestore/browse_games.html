@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse games {% endblock %}
+
+{% block content %}
+
+<h2>List of released games:</h2>
+  games = Game.All()
+{% endblock %}
