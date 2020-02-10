@@ -9,12 +9,14 @@
   {% for game in games %}
     <h1>{{ game.name }}</h1>
 
-      {% for score in highscores %}
-        {% if score.game == game %}
-          {{ score }}
-          <br>
-        {% endif %}
-      {% endfor %}
+    {% for score in highscores %}
+
+      {% if score.game == game %}
+        {{ score }}
+        <br>
+      {% endif %}
+      
+    {% endfor %}
 
   {% endfor %}
 
