@@ -34,6 +34,13 @@ class GameListView(ListView):
     template_name = 'gamestore/browse_games.html'
     context_object_name = 'games'
 
+
+class HighscoreListView(ListView):
+    model = Highscore
+    template_name = 'gamestore/highscores.html'
+    context_object_name = 'highscores'
+    ordering = ['-score']
+
 class UserGameListView(ListView):
     model = Game
     template_name = 'gamestore/user_stats.html'

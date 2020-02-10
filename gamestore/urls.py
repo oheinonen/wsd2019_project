@@ -6,7 +6,8 @@ from .views import (
     GameCreateView,
     GameDeleteView,
     GameUpdateView,
-    UserGameListView
+    UserGameListView,
+    HighscoreListView
     )
 from . import views
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path('game/<str:pk>/highscore/', views.highscore,name='highscore' ),
     path('game/<str:pk>/update/',GameUpdateView.as_view(),name='game-update'),
     path('game/<str:pk>/delete/',GameDeleteView.as_view(),name='game-delete'),
-    path('browsegames/',GameListView.as_view(),name='game-list' )
+    path('browsegames/',GameListView.as_view(),name='game-list' ),
+    path('highscores/',HighscoreListView.as_view(),name='highscores' )
 ]
