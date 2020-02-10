@@ -23,6 +23,9 @@ class Highscore(models.Model):
     player = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     score = models.IntegerField()
 
+    def __str__(self):
+        return self.player.username + ": " + str(self.score)
+
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

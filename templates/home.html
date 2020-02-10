@@ -6,9 +6,9 @@
 {% if user.is_authenticated %}
 
   {% for game in games %}
-    <h1>{{ game.name }}</h1>
+    <a href="{% url 'game-detail' game.name %}">{{ game.name }}</a> <br>
     {% if game.is_bought %}
-      <iframe src="{{ object.url }}" width="" height=""></iframe>
+      <iframe src="{{ game.url }}" width="" height=""></iframe>
     {% else %}
       <h2>You need to buy game to play it!</h2>
       <button type="submit" name="buyGame" method="post">Buy Game Here</button>
