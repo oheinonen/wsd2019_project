@@ -6,17 +6,18 @@
   <h1>{{ object.name }}</h1>
   <h2>Game developed by {{ object.developer }}</h2>
   {% if object.developer == user %}
-    <iframe src="{{ object.url }}" width="" height=""></iframe>
+    <iframe src="{{ object.url }}" style="background: #FFFFFF;" width="" height=""></iframe>
     <br>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Update</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Delete</a>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'game-update' object.name %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'game-delete' object.name %}">Delete</a>
   {% elif user.usertype == "['player']" %}
 
 
-      <iframe id="iframe" src="{{ object.url }}" width="" height=""></iframe>
+      <iframe id="iframe" style="background: #FFFFFF;" src="{{ object.url }}" width="" height=""></iframe>
       <script>
         window.addEventListener('message', function(event) {
           switch (event.data.messageType) {
+
             case "SCORE":
               $.ajax({
                 type: 'get',
@@ -29,13 +30,32 @@
                 }
               });
               break;
+
             case "SAVE":
-            alert(`Game save failed`);
+              var txt = JSON.stringify(event.data.gameState)
+              alert(txt)
+              alert(`${event.data.gameState}Your score is ${event.data.gameState['score']} and items ${event.data.gameState['playerItems']}.`);
+
+              $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/game/{{game.name}}/save/',
+                data: {
+                  gameState: JSON.stringify(event.data.gameState)
+                },
+                success: function (data) {
+                  alert(`Game saved! Your score is ${event.data.gameState['score']} and items ${event.data.gameState['playerItems']}.`);
+                },
+                error: function(data) {
+                  alert(`Error! Your game is not saved`);
+                }
+              });
               break;
+
             case "LOAD_REQUEST":
             alert(`Load request failed`);
 
               break;
+
             case "SETTING":
               alert(`Game from ${event.origin} loaded.Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
               break;

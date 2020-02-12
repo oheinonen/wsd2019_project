@@ -17,6 +17,18 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('game:detail', kwargs={'pk': self.pk})
 
+
+class GameSession(models.Model):
+    id = models.AutoField(primary_key=True)
+    #time = models.DateTimeField(auto_now = True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    player = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
+    gameState = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return self.player.username + ': ' + self.game.name
+
+
 class Highscore(models.Model):
     id = models.AutoField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

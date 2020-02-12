@@ -1,8 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
-from django.contrib.auth.models import User
-from .models import Game,Highscore
+from .models import Game,Highscore, GameSession
 from users.models import CustomUser
 from django.views.generic import (
     ListView,
@@ -19,6 +18,15 @@ def home(request):
         'games' : Game.objects.all()
     }
     return render(request, "home.html",context)
+
+def gamestate(request, pk):
+    if request.method == "GET":
+        game = Game.objects.filter(name=pk).first()
+        gs = GameSession( game=game,player=request.user, gameState=request.GET['gameState'])
+        gs.save()
+        return HttpResponse('success')
+    else:
+        return HttpResponse("unsuccessful")
 
 def highscore(request, pk):
     if request.method == "GET":
