@@ -87,6 +87,6 @@
       </script>
 
       <h2>You need to buy game to play it!</h2>
-      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
+      <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
   {% endif %}
 {% endblock %}

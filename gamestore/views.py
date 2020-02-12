@@ -1,8 +1,9 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
-from .models import Game,Highscore, GameSession
+from .models import Game,Highscore, GameSession, Transaction
 from users.models import CustomUser
+from hashlib import md5
 from django.views.generic import (
     ListView,
     DetailView,
@@ -21,8 +22,19 @@ def home(request):
 
 def buy(request, pk):
     template_name = 'gamestore/buy.html'
+    game = Game.objects.filter(name=pk).first()
+    user = request.user
+    transaction = Transaction(game=game, player=user)
+    transaction.save()
+    secret = 'cpWS7GVBRKk6zkAOx58eL6JmyvYA'
+    checksumstr = f"pid={str(transaction.id):s}&sid=6aBk9HRlc3RTZWxsZXI=&amount={game.price:.2f}&token={secret:s}"
+    checksum = md5(checksumstr.encode('utf-8')).hexdigest()
+
     context = {
-        'game': Game.objects.filter(name=pk).first()
+        'game': game,
+        'user': user,
+        'transaction': transaction,
+        'checksum': checksum
     }
     return render(request, "gamestore/buy.html",context)
 
