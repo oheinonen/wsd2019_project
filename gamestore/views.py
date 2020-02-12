@@ -32,8 +32,8 @@ def buy(request, pk):
     checksum = md5(checksumstr.encode('utf-8')).hexdigest()
 
     successurl = request.build_absolute_uri(game.get_absolute_url()+'success')
-    errorurl = request.build_absolute_uri('/')
-    cancelurl = request.build_absolute_uri(game.get_absolute_url())
+    errorurl = request.build_absolute_uri(game.get_absolute_url()+'buy')
+    cancelurl = request.build_absolute_uri(game.get_absolute_url()+'buy')
 
     context = {
         'game': game,
