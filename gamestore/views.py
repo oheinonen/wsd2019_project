@@ -1,8 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
-from django.contrib.auth.models import User
-from .models import Game,Highscore
+from .models import Game,Highscore, GameSession
 from users.models import CustomUser
 from django.views.generic import (
     ListView,
@@ -20,6 +19,20 @@ def home(request):
     }
     return render(request, "home.html",context)
 
+def gamestate(request, pk):
+    if request.method == "GET":
+        game = Game.objects.filter(name=pk).first()
+        try:
+            oldGameSave = GameSession.objects.get(game=game, player=request.user)
+            oldGameSave.delete()
+        except GameSession.DoesNotExist:
+            pass
+        gs = GameSession( game=game,player=request.user, gameState=request.GET['gameState'])
+        gs.save()
+        return HttpResponse('success')
+    else:
+        return HttpResponse("unsuccessful")
+
 def highscore(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
@@ -28,6 +41,20 @@ def highscore(request, pk):
         return HttpResponse('success')
     else:
         return HttpResponse("unsuccessful")
+
+def loadgame(request, pk):
+    if request.method == "GET":
+        game = Game.objects.filter(name=pk).first()
+        gameSave = GameSession.objects.get(game=game, player=request.user)
+        
+        if gameSave == None:
+            return HttpResponse("unsuccessful")
+        else:
+            return HttpResponse(gameSave.gameState)
+
+    else:
+        return HttpResponse("unsuccessful")
+
 
 def games_list(request):
     context = {
