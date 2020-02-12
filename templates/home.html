@@ -5,14 +5,18 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-  {% for game in bought_games %}
+  {% if not bought_games %}
+    <a href="{% url 'browse_games' %}"> Buy Games Here!</a>
+  {% else %}
+    {% for game in bought_games %}
+      <h2>{{game.name}}</h2>
+        <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+        <a href="{% url 'game-detail' game.name %}">Play {{ game.name }}</a> <br>
+      <h3>Game developed by {{ game.developer }}</h3>
 
-    <a href="{% url 'game-detail' game.name %}">{{ game.name }}</a> <br>
-      <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
-
-    <h3>Game developed by {{ game.developer }}</h3>
-
-  {% endfor %}
+    {% endfor %}
+    <a href="{% url 'browse_games' %}"> Buy More Here!</a>
+  {% endif %}
 
 {% else %}
   <p>You are not logged in</p>

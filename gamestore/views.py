@@ -83,6 +83,15 @@ def loadgame(request, pk):
     else:
         return HttpResponse("unsuccessful")
 
+def payment_success(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    request.user.games.add(game)
+    context = {
+        'game': game,
+        'game_just_bought': True
+    }
+    return render(request, 'gamestore/detail.html', context)
+
 
 def games_list(request):
     context = {
