@@ -5,14 +5,11 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-  {% for game in games %}
+  {% for game in bought_games %}
+
     <a href="{% url 'game-detail' game.name %}">{{ game.name }}</a> <br>
-    {% if game.is_bought %}
       <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
-    {% else %}
-      <h2>You need to buy game to play it!</h2>
-      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
-    {% endif %}
+
     <h3>Game developed by {{ game.developer }}</h3>
 
   {% endfor %}

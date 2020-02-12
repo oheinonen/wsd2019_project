@@ -16,7 +16,8 @@ import requests
 
 def home(request):
     context = {
-        'games' : Game.objects.all()
+        'games' : Game.objects.all(),
+        'bought_games': request.user.games.all()
     }
     return render(request, "home.html",context)
 
