@@ -31,9 +31,9 @@ def buy(request, pk):
     checksumstr = f"pid={str(transaction.id):s}&sid=6aBk9HRlc3RTZWxsZXI=&amount={game.price:.2f}&token={secret:s}"
     checksum = md5(checksumstr.encode('utf-8')).hexdigest()
 
-    successurl = request.build_absolute_uri(game.get_absolute_url()+'success')
+    successurl = request.build_absolute_uri(game.get_absolute_url()+'buy/success')
     errorurl = request.build_absolute_uri(game.get_absolute_url()+'buy')
-    cancelurl = request.build_absolute_uri(game.get_absolute_url()+'buy')
+    cancelurl = request.build_absolute_uri(game.get_absolute_url()+'buy/cancel')
 
     context = {
         'game': game,
@@ -88,10 +88,17 @@ def payment_success(request,pk):
     request.user.games.add(game)
     context = {
         'game': game,
-        'game_just_bought': True
+        'message': "Game successfully purchased!"
     }
     return render(request, 'gamestore/detail.html', context)
 
+def payment_cancel(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    context = {
+        'game': game,
+        'message': "Payment cancelled!"
+    }
+    return render(request, 'gamestore/detail.html', context)
 
 def games_list(request):
     context = {
