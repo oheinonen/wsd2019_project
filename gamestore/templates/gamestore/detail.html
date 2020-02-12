@@ -19,6 +19,7 @@
           switch (event.data.messageType) {
 
             case "SCORE":
+
               $.ajax({
                 type: 'get',
                 url: 'http://localhost:8000/game/{{game.name}}/highscore/',
@@ -27,14 +28,14 @@
                 },
                 success: function (data) {
                   alert(`Game over! Your score is ${event.data.score}.`);
+                },
+                error: function(data) {
+                  alert(`Error! Your score is not submitted.`);
                 }
               });
               break;
 
             case "SAVE":
-              var txt = JSON.stringify(event.data.gameState)
-              alert(txt)
-              alert(`${event.data.gameState}Your score is ${event.data.gameState['score']} and items ${event.data.gameState['playerItems']}.`);
 
               $.ajax({
                 type: 'get',
@@ -52,8 +53,22 @@
               break;
 
             case "LOAD_REQUEST":
-            alert(`Load request failed`);
+              $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/game/{{game.name}}/load/',
 
+                success: function (data) {
+                  var msg = {
+                    "messageType": "LOAD",
+                    "gameState": JSON.parse(data)
+                    }
+                    document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+                    alert(`You game is now loaded`);
+                },
+                error: function(data) {
+                  alert(`Error! You don't have saved game`);
+                }
+              });
               break;
 
             case "SETTING":

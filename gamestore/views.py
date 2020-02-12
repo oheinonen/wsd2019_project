@@ -22,6 +22,11 @@ def home(request):
 def gamestate(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
+        try:
+            oldGameSave = GameSession.objects.get(game=game, player=request.user)
+            oldGameSave.delete()
+        except GameSession.DoesNotExist:
+            pass
         gs = GameSession( game=game,player=request.user, gameState=request.GET['gameState'])
         gs.save()
         return HttpResponse('success')
@@ -36,6 +41,19 @@ def highscore(request, pk):
         return HttpResponse('success')
     else:
         return HttpResponse("unsuccessful")
+
+def loadgame(request, pk):
+    if request.method == "GET":
+        game = Game.objects.filter(name=pk).first()
+        try:
+            gameSave = GameSession.objects.get(game=game, player=request.user)
+            return HttpResponse(gameSave.gameState)
+
+        except GameSession.DoesNotExist:
+            return HttpResponse("unsuccessful")
+    else:
+        return HttpResponse("unsuccessful")
+
 
 def games_list(request):
     context = {
