@@ -51,6 +51,7 @@ def loadgame(request, pk):
             return HttpResponse("unsuccessful")
         else:
             return HttpResponse(gameSave.gameState)
+
     else:
         return HttpResponse("unsuccessful")
 
