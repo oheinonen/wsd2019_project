@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Buy Game {% endblock %}
+
+{% block content %}
+
+<h2>Buy {{ game }}</h2>
+    <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="pid" value={{transaction.id}}>
+      <input type="hidden" name="sid" value="6aBk9HRlc3RTZWxsZXI=">
+      <input type="hidden" name="amount" value={{game.price}}>
+      <input type="hidden" name="success_url" value={{successurl}}>
+      <input type="hidden" name="cancel_url" value={{cancelurl}}>
+      <input type="hidden" name="error_url" value={{errorurl}}>
+      <input type="hidden" name="checksum"value={{checksum}}>
+      Amount to be paid {{ game.price }}
+      <input type="submit" value="Pay">
+    </form>
+
+{% endblock %}

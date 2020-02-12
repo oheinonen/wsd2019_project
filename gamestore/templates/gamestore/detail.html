@@ -1,92 +1,108 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ object.name }}{% endblock %}
+{% block title %}{{ game.name }}{% endblock %}
 
 {% block content %}
-  <h1>{{ object.name }}</h1>
-  <h2>Game developed by {{ object.developer }}</h2>
-  {% if object.developer == user %}
-    <iframe src="{{ object.url }}" style="background: #FFFFFF;" width="" height=""></iframe>
+  <h1>{{ game.name }}</h1>
+  <h2>Game developed by {{ game.developer }}</h2>
+
+  {% if game.developer == user %}
+    <iframe src="{{ game.url }}" style="background: #FFFFFF;" width="" height=""></iframe>
     <br>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'game-update' object.name %}">Update</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'game-delete' object.name %}">Delete</a>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'game-update' game.name %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'game-delete' game.name %}">Delete</a>
+
   {% elif user.usertype == "['player']" %}
 
+    {% if game in user.games.all  %}
 
-      <iframe id="iframe" style="background: #FFFFFF;" src="{{ object.url }}" width="" height=""></iframe>
-      <script>
-        window.addEventListener('message', function(event) {
-          switch (event.data.messageType) {
+      {% if message %}
+        <!-- Pops alert window after a payment has occured -->
+        <iframe onload="showAlert('{{message}}')" id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+      {% else %}
+        <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+      {% endif %}
 
-            case "SCORE":
+        <script>
+          function showAlert(data){
+            alert(data);
+          }
+          window.addEventListener('message', function(event) {
+            switch (event.data.messageType) {
 
-              $.ajax({
-                type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/highscore/',
-                data: {
-                  score: event.data.score
-                },
-                success: function (data) {
-                  alert(`Game over! Your score is ${event.data.score}.`);
-                },
-                error: function(data) {
-                  alert(`Error! Your score is not submitted.`);
-                }
-              });
-              break;
+              case "SCORE":
 
-            case "SAVE":
-
-              $.ajax({
-                type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/save/',
-                data: {
-                  gameState: JSON.stringify(event.data.gameState)
-                },
-                success: function (data) {
-                  alert(`Game saved! Your score is ${event.data.gameState['score']} and items ${event.data.gameState['playerItems']}.`);
-                },
-                error: function(data) {
-                  alert(`Error! Your game is not saved`);
-                }
-              });
-              break;
-
-            case "LOAD_REQUEST":
-
-              $.ajax({
-                type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/load/',
-
-                success: function (data) {
-                  var msg = {
-                    "messageType": "LOAD",
-                    "gameState": JSON.parse(data)
+                $.ajax({
+                  type: 'get',
+                  url: 'highscore/',
+                  data: {
+                    score: event.data.score
+                  },
+                  success: function (data) {
+                    alert(`Game over! Your score is ${event.data.score}.`);
+                  },
+                  error: function(data) {
+                    alert(`Error! Your score is not submitted.`);
                   }
+                });
+                break;
 
-                  document.getElementById('iframe').contentWindow.postMessage(msg, '*')
-                  alert(`You game is now loaded`);
-                },
+              case "SAVE":
 
-                error: function(data) {
-                  var msg = {
-                    "messageType": "ERROR",
-                    "info": "Gamestate could not be loaded."
+                $.ajax({
+                  type: 'get',
+                  url: 'save/',
+                  data: {
+                    gameState: JSON.stringify(event.data.gameState)
+                  },
+                  success: function (data) {
+                    alert(`Game saved! Your score is ${event.data.gameState['score']} and items ${event.data.gameState['playerItems']}.`);
+                  },
+                  error: function(data) {
+                    alert(`Error! Your game is not saved`);
                   }
+                });
+                break;
 
-                  document.getElementById('iframe').contentWindow.postMessage(msg, '*')
-                }
-              });
-              break;
+              case "LOAD_REQUEST":
 
-            case "SETTING":
-              alert(`Game from ${event.origin} loaded.`);
-              break;
-          };
-        });
-      </script>
+                $.ajax({
+                  type: 'get',
+                  url: 'load/',
 
-      <h2>You need to buy game to play it!</h2>
-      <button type="submit" name="buyGame" method="post">Buy Game Here</button>
+                  success: function (data) {
+                    var msg = {
+                      "messageType": "LOAD",
+                      "gameState": JSON.parse(data)
+                    }
+
+                    document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+                    alert(`You game is now loaded`);
+                  },
+
+                  error: function(data) {
+                    var msg = {
+                      "messageType": "ERROR",
+                      "info": "Gamestate could not be loaded."
+                    }
+
+                    document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+                  }
+                });
+                break;
+
+              case "SETTING":
+                alert(`Game from ${event.origin} loaded.`);
+                break;
+            };
+          });
+        </script>
+
+    {%else%}
+
+        <h2>You need to buy game to play it!</h2>
+        <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+    {% endif %}
+
   {% endif %}
 {% endblock %}

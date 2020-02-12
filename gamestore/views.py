@@ -1,8 +1,9 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
-from .models import Game,Highscore, GameSession
+from .models import Game,Highscore, GameSession, Transaction
 from users.models import CustomUser
+from hashlib import md5
 from django.views.generic import (
     ListView,
     DetailView,
@@ -15,9 +16,35 @@ import requests
 
 def home(request):
     context = {
-        'games' : Game.objects.all()
+        'games' : Game.objects.all(),
     }
     return render(request, "home.html",context)
+
+def buy(request, pk):
+    template_name = 'gamestore/buy.html'
+    game = Game.objects.filter(name=pk).first()
+    user = request.user
+    transaction = Transaction(game=game, player=user)
+    transaction.save()
+    secret = 'cpWS7GVBRKk6zkAOx58eL6JmyvYA'
+    checksumstr = f"pid={str(transaction.id):s}&sid=6aBk9HRlc3RTZWxsZXI=&amount={game.price:.2f}&token={secret:s}"
+    checksum = md5(checksumstr.encode('utf-8')).hexdigest()
+
+    successurl = request.build_absolute_uri(game.get_absolute_url()+'buy/success')
+    errorurl = request.build_absolute_uri(game.get_absolute_url()+'buy')
+    cancelurl = request.build_absolute_uri(game.get_absolute_url()+'buy/cancel')
+
+    context = {
+        'game': game,
+        'user': user,
+        'transaction': transaction,
+        'checksum': checksum,
+        'successurl': successurl,
+        'errorurl': errorurl,
+        'cancelurl': cancelurl
+    }
+    return render(request, "gamestore/buy.html",context)
+
 
 def gamestate(request, pk):
     if request.method == "GET":
@@ -46,7 +73,7 @@ def loadgame(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
         gameSave = GameSession.objects.get(game=game, player=request.user)
-        
+
         if gameSave == None:
             return HttpResponse("unsuccessful")
         else:
@@ -55,6 +82,30 @@ def loadgame(request, pk):
     else:
         return HttpResponse("unsuccessful")
 
+def payment_success(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    request.user.games.add(game)
+    context = {
+        'game': game,
+        'message': "Game successfully purchased!"
+    }
+    return render(request, 'gamestore/detail.html', context)
+
+def payment_cancel(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    context = {
+        'game': game,
+        'message': "Payment cancelled!"
+    }
+    return render(request, 'gamestore/detail.html', context)
+
+def payment_error(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    context = {
+        'game': game,
+        'message': "Error occured during payment. Try again or contact us."
+    }
+    return render(request, 'gamestore/detail.html', context)
 
 def games_list(request):
     context = {
