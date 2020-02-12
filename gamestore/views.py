@@ -30,11 +30,18 @@ def buy(request, pk):
     checksumstr = f"pid={str(transaction.id):s}&sid=6aBk9HRlc3RTZWxsZXI=&amount={game.price:.2f}&token={secret:s}"
     checksum = md5(checksumstr.encode('utf-8')).hexdigest()
 
+    successurl = request.build_absolute_uri(game.get_absolute_url()+'success')
+    errorurl = request.build_absolute_uri('/')
+    cancelurl = request.build_absolute_uri(game.get_absolute_url())
+
     context = {
         'game': game,
         'user': user,
         'transaction': transaction,
-        'checksum': checksum
+        'checksum': checksum,
+        'successurl': successurl,
+        'errorurl': errorurl,
+        'cancelurl': cancelurl
     }
     return render(request, "gamestore/buy.html",context)
 
