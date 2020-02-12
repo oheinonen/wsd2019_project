@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
 {% block content%}
+
   {% for game in games %}
-    <div class="">
-      <p>Game {{ game.name }} Sales</p>
-      <!-- Add amount of purchased games and times-->
-    </div>
+    <p>Game {{ game.name }} Sales</p>
+    {{game.name}} is sold {{ game.sales }} time(s)!
   {% endfor %}
 
 {% endblock content%}

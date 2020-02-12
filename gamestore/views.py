@@ -151,6 +151,13 @@ class UserGameListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
         return Game.objects.filter(developer=user)
+        
+    def get_context_data(self, **kwargs):
+        context = super(UserGameListView, self).get_context_data(**kwargs)
+        context.update({
+            'transactions': Transaction.objects.all()
+        })
+        return context
 
 class GameDetailView(DetailView):
     model = Game
@@ -163,7 +170,6 @@ class GameDetailView(DetailView):
             'highscores': Highscore.objects.order_by('-score')
         })
         return context
-
 
 
 class GameCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):

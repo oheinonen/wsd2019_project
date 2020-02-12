@@ -7,6 +7,18 @@
 
   {% if user.usertype == "['dev']" %}
 
+  {% for game in games %}
+
+    {% if game.developer == user  %}
+
+      <h2>{{game.name}}</h2>
+
+      <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe><br>
+      <a href="{% url 'game-detail' game.name %}"> Visit {{ game.name }} detail page</a> <br>
+
+    {% endif %}
+
+  {% endfor %}
 
   {% else %}
 

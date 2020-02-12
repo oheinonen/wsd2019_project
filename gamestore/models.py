@@ -11,6 +11,10 @@ class Game(models.Model):
     price = models.DecimalField(max_digits=20, decimal_places=2)
     developer = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
 
+    def sales(self):
+        numbers_sold = Transaction.objects.filter(game=self).count()
+        return numbers_sold
+
     def __str__(self):
         return self.name
 
