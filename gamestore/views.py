@@ -155,6 +155,16 @@ class UserGameListView(ListView):
 class GameDetailView(DetailView):
     model = Game
     template_name = 'gamestore/detail.html'
+    context_object_name = 'games'
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetailView, self).get_context_data(**kwargs)
+        context.update({
+            'highscores': Highscore.objects.order_by('-score')
+        })
+        return context
+
+
 
 class GameCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Game
