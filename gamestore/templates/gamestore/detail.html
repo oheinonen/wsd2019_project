@@ -22,7 +22,7 @@
 
               $.ajax({
                 type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/highscore/',
+                url: 'highscore/',
                 data: {
                   score: event.data.score
                 },
@@ -39,7 +39,7 @@
 
               $.ajax({
                 type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/save/',
+                url: 'save/',
                 data: {
                   gameState: JSON.stringify(event.data.gameState)
                 },
@@ -56,7 +56,7 @@
 
               $.ajax({
                 type: 'get',
-                url: 'http://localhost:8000/game/{{game.name}}/load/',
+                url: 'load/',
 
                 success: function (data) {
                   var msg = {
