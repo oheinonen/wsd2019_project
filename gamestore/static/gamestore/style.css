@@ -1,5 +1,5 @@
 body {
-    background: green ;
+    background: pink ;
 }
 
 .navbar {
@@ -12,5 +12,8 @@ body {
 
 .cont-1 {
     padding-left: 30px;
+}
 
+#iframe {
+  background-color: white;
 }

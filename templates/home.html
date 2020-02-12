@@ -8,7 +8,7 @@
   {% for game in games %}
     <a href="{% url 'game-detail' game.name %}">{{ game.name }}</a> <br>
     {% if game.is_bought %}
-      <iframe src="{{ game.url }}" width="" height=""></iframe>
+      <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
     {% else %}
       <h2>You need to buy game to play it!</h2>
       <button type="submit" name="buyGame" method="post">Buy Game Here</button>

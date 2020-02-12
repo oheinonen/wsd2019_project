@@ -17,6 +17,8 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('game:detail', kwargs={'pk': self.pk})
 
+    
+
 
 class GameSession(models.Model):
     id = models.AutoField(primary_key=True)

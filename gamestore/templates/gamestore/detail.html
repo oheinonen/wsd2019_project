@@ -13,7 +13,7 @@
   {% elif user.usertype == "['player']" %}
 
 
-      <iframe id="iframe" style="background: #FFFFFF;" src="{{ object.url }}" width="" height=""></iframe>
+      <iframe id="iframe" src="{{ object.url }}" width="" height=""></iframe>
       <script>
         window.addEventListener('message', function(event) {
           switch (event.data.messageType) {

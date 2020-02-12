@@ -19,6 +19,14 @@ def home(request):
     }
     return render(request, "home.html",context)
 
+def buy(request, pk):
+    template_name = 'gamestore/buy.html'
+    context = {
+        'game': Game.objects.filter(name=pk).first()
+    }
+    return render(request, "gamestore/buy.html",context)
+
+
 def gamestate(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
@@ -46,7 +54,7 @@ def loadgame(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
         gameSave = GameSession.objects.get(game=game, player=request.user)
-        
+
         if gameSave == None:
             return HttpResponse("unsuccessful")
         else:
