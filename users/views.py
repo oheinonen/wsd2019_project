@@ -15,4 +15,4 @@ def signup(request):
             return redirect('home')
     else:
         form = forms.CustomUserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form, 'signup_page': 'active'})
