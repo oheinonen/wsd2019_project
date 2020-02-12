@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from .models import Game,Highscore, GameSession, Transaction
@@ -17,8 +17,9 @@ import requests
 def home(request):
     context = {
         'games' : Game.objects.all(),
+        'home_page' : 'active'
     }
-    return render(request, "home.html",context)
+    return render(request, "home.html", context)
 
 def buy(request, pk):
     template_name = 'gamestore/buy.html'
@@ -84,49 +85,48 @@ def loadgame(request, pk):
 
 def payment_success(request,pk):
     game=Game.objects.filter(name=pk).first()
-    request.user.games.add(game)
     context = {
         'game': game,
-        'message': "Game successfully purchased!"
+        'message': "Game successfully purchased!",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+
+    if game in request.user.games.all():
+        context['message'] = "You have already bought this game!"
+        return redirect(url, context)
+
+    else:
+        request.user.games.add(game)
+        return redirect(url, context)
 
 def payment_cancel(request,pk):
+
     game=Game.objects.filter(name=pk).first()
     context = {
         'game': game,
-        'message': "Payment cancelled!"
+        'message': "Payment cancelled!",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+    return redirect(url, context)
 
 def payment_error(request,pk):
     game=Game.objects.filter(name=pk).first()
     context = {
         'game': game,
-        'message': "Error occured during payment. Try again or contact us."
+        'message': "Error occured during payment. Try again or contact us.",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+    return render(url, context)
 
 def games_list(request):
     context = {
-        'games' : Game.objects.all()
+        'games' : Game.objects.all(),
+        'browse_page' : 'active'
     }
     return render(request, 'gamestore/browse_games.html', context)
-
-class GameListView(ListView):
-    model = Game
-    template_name = 'gamestore/browse_games.html'
-    context_object_name = 'games'
-
-    def get_context_data(self, **kwargs):
-        context = super(HighscoreListView, self).get_context_data(**kwargs)
-        context.update({
-            'games': Game.objects.all()
-        })
-        return context
-
-    def get_queryset(self):
-        return Highscore.objects.order_by('-score')
 
 class HighscoreListView(ListView):
     model = Highscore
@@ -136,7 +136,8 @@ class HighscoreListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(HighscoreListView, self).get_context_data(**kwargs)
         context.update({
-            'games': Game.objects.all()
+            'games': Game.objects.all(),
+            'highscore_page' : 'active'
         })
         return context
 
@@ -152,9 +153,27 @@ class UserGameListView(ListView):
         user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
         return Game.objects.filter(developer=user)
 
+    def get_context_data(self, **kwargs):
+        context = super(UserGameListView, self).get_context_data(**kwargs)
+        context.update({
+            'transactions': Transaction.objects.all(),
+            'sales_stats_page' : 'active'
+
+        })
+        return context
+
 class GameDetailView(DetailView):
     model = Game
     template_name = 'gamestore/detail.html'
+    context_object_name = 'game'
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetailView, self).get_context_data(**kwargs)
+        context.update({
+            'highscores': Highscore.objects.order_by('-score')
+        })
+        return context
+
 
 class GameCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Game
@@ -166,6 +185,13 @@ class GameCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.usertype == "['dev']"
+
+    def get_context_data(self, **kwargs):
+        context = super(GameCreateView, self).get_context_data(**kwargs)
+        context.update({
+            'add_game_page' : 'active'
+        })
+        return context
 
 class GameUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Game

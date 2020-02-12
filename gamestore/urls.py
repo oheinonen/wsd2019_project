@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import (
     GameDetailView,
-    GameListView,
     GameCreateView,
     GameDeleteView,
     GameUpdateView,
@@ -18,7 +17,7 @@ urlpatterns = [
     path('game/add/',GameCreateView.as_view(),name='game-add' ),
     path('game/<str:pk>/',GameDetailView.as_view(),name='game-detail' ),
     path('game/<str:pk>/highscore/', views.highscore,name='highscore' ),
-    path('game/<str:pk>/buy/', views.buy,name='buy' ),
+    path('game/<str:pk>/buy/', views.buy, name='buy' ),
     path('game/<str:pk>/buy/success/',views.payment_success,name='detail_success'),
     path('game/<str:pk>/buy/cancel/',views.payment_cancel,name='detail_cancel'),
     path('game/<str:pk>/buy/error/',views.payment_error,name='detail_error'),
