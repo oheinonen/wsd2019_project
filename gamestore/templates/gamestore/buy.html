@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Buy Game {% endblock %}
+{% block title %}Buy {{ game }} {% endblock %}
 
 {% block content %}
-
-<h2>Buy {{ game }}</h2>
+{% if game not in user.games.all %}
+  <h2>Buy {{ game }}</h2>
     <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
       {% csrf_token %}
       <input type="hidden" name="pid" value={{transaction.id}}>
@@ -17,5 +17,7 @@
       Amount to be paid {{ game.price }}
       <input type="submit" value="Pay">
     </form>
-
+{% else %}
+  <h1>You have already bought this game!</h1>
+{% endif %}
 {% endblock %}

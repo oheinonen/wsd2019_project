@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from .models import Game,Highscore, GameSession, Transaction
@@ -84,40 +84,47 @@ def loadgame(request, pk):
 
 def payment_success(request,pk):
     game=Game.objects.filter(name=pk).first()
-    request.user.games.add(game)
     context = {
         'game': game,
-        'message': "Game successfully purchased!"
+        'message': "Game successfully purchased!",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+
+    if game in request.user.games.all():
+        context['message'] = "You have already bought this game!"
+        return redirect(url, context)
+
+    else:
+        request.user.games.add(game)
+        return redirect(url, context)
 
 def payment_cancel(request,pk):
+
     game=Game.objects.filter(name=pk).first()
     context = {
         'game': game,
-        'message': "Payment cancelled!"
+        'message': "Payment cancelled!",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+    return redirect(url, context)
 
 def payment_error(request,pk):
     game=Game.objects.filter(name=pk).first()
     context = {
         'game': game,
-        'message': "Error occured during payment. Try again or contact us."
+        'message': "Error occured during payment. Try again or contact us.",
+        'highscores': Highscore.objects.order_by('-score')
     }
-    return render(request, 'gamestore/detail.html', context)
+    url = request.build_absolute_uri(game.get_absolute_url())
+    return render(url, context)
 
 def games_list(request):
     context = {
         'games' : Game.objects.all()
     }
     return render(request, 'gamestore/browse_games.html', context)
-
-class GameListView(ListView):
-    model = Game
-    template_name = 'gamestore/browse_games.html'
-    context_object_name = 'games'
-    
 
 class HighscoreListView(ListView):
     model = Highscore
