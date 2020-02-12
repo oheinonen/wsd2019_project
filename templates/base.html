@@ -19,9 +19,9 @@
         <a class="navbar-brand" href="{% url 'home' %}">Django Game Store</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'browse_games'%}">Browse Games</a></li>
-        <li><a href="{% url 'highscores' %}">Highscores</a></li>
+        <li class="nav-item {{ home_page }}"><a href="{% url 'home' %}">Home</a></li>
+        <li class= "nav-item {{ browse_page }}"><a href="{% url 'browse_games'%}">Browse Games</a></li>
+        <li class= "nav-item {{ highscore_page }}"><a href="{% url 'highscores' %}">Highscores</a></li>
         {% if user.is_authenticated %}
           {% if user.usertype == "['dev']" %}
           <li><a href="{% url 'game-add' %}">Add new game</a></li>

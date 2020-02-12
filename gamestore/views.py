@@ -17,8 +17,9 @@ import requests
 def home(request):
     context = {
         'games' : Game.objects.all(),
+        'home_page' : 'active'
     }
-    return render(request, "home.html",context)
+    return render(request, "home.html", context)
 
 def buy(request, pk):
     template_name = 'gamestore/buy.html'
@@ -109,7 +110,8 @@ def payment_error(request,pk):
 
 def games_list(request):
     context = {
-        'games' : Game.objects.all()
+        'games' : Game.objects.all(),
+        'browse_page' : 'active'
     }
     return render(request, 'gamestore/browse_games.html', context)
 
@@ -136,7 +138,8 @@ class HighscoreListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(HighscoreListView, self).get_context_data(**kwargs)
         context.update({
-            'games': Game.objects.all()
+            'games': Game.objects.all(),
+            'highscore_page' : 'active'
         })
         return context
 
@@ -151,7 +154,7 @@ class UserGameListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
         return Game.objects.filter(developer=user)
-        
+
     def get_context_data(self, **kwargs):
         context = super(UserGameListView, self).get_context_data(**kwargs)
         context.update({
@@ -162,7 +165,7 @@ class UserGameListView(ListView):
 class GameDetailView(DetailView):
     model = Game
     template_name = 'gamestore/detail.html'
-    context_object_name = 'games'
+    context_object_name = 'game'
 
     def get_context_data(self, **kwargs):
         context = super(GameDetailView, self).get_context_data(**kwargs)
