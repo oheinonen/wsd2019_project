@@ -9,11 +9,14 @@
   <h1>Released games:</h1>
   {% for game in games %}
 
-    <h3>{{ game.name }}</h3>
-    <h5>Price: {{ game.price }}</h5>
-    <h5>Game developed by {{ game.developer }}</h5>
-    <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
-    
+      <h3>{{ game.name }}</h3>
+      <h5>Price: {{ game.price }}</h5>
+      <h5>Game developed by {{ game.developer }}</h5>
+      
+    {% if game not in user.games.all  %}
+      <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+
+    {% endif %}
   {% endfor %}
 
 {% else %}

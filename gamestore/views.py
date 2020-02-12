@@ -117,16 +117,7 @@ class GameListView(ListView):
     model = Game
     template_name = 'gamestore/browse_games.html'
     context_object_name = 'games'
-
-    def get_context_data(self, **kwargs):
-        context = super(HighscoreListView, self).get_context_data(**kwargs)
-        context.update({
-            'games': Game.objects.all()
-        })
-        return context
-
-    def get_queryset(self):
-        return Highscore.objects.order_by('-score')
+    
 
 class HighscoreListView(ListView):
     model = Highscore
