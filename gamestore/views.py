@@ -45,12 +45,12 @@ def highscore(request, pk):
 def loadgame(request, pk):
     if request.method == "GET":
         game = Game.objects.filter(name=pk).first()
-        try:
-            gameSave = GameSession.objects.get(game=game, player=request.user)
-            return HttpResponse(gameSave.gameState)
-
-        except GameSession.DoesNotExist:
+        gameSave = GameSession.objects.get(game=game, player=request.user)
+        
+        if gameSave == None:
             return HttpResponse("unsuccessful")
+        else:
+            return HttpResponse(gameSave.gameState)
     else:
         return HttpResponse("unsuccessful")
 

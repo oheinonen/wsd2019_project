@@ -53,6 +53,7 @@
               break;
 
             case "LOAD_REQUEST":
+
               $.ajax({
                 type: 'get',
                 url: 'http://localhost:8000/game/{{game.name}}/load/',
@@ -61,18 +62,25 @@
                   var msg = {
                     "messageType": "LOAD",
                     "gameState": JSON.parse(data)
-                    }
-                    document.getElementById('iframe').contentWindow.postMessage(msg, '*')
-                    alert(`You game is now loaded`);
+                  }
+
+                  document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+                  alert(`You game is now loaded`);
                 },
+
                 error: function(data) {
-                  alert(`Error! You don't have saved game`);
+                  var msg = {
+                    "messageType": "ERROR",
+                    "info": "Gamestate could not be loaded."
+                  }
+
+                  document.getElementById('iframe').contentWindow.postMessage(msg, '*')
                 }
               });
               break;
 
             case "SETTING":
-              alert(`Game from ${event.origin} loaded.Configurations: Width=${event.data.options.width}, Heigth = ${event.data.options.height}`);
+              alert(`Game from ${event.origin} loaded.`);
               break;
           };
         });
