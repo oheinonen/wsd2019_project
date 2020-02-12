@@ -5,22 +5,33 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-  {% if not bought_games %}
-    <a href="{% url 'browse_games' %}"> Buy Games Here!</a>
+  {% if user.usertype == "['dev']" %}
+
+
   {% else %}
-    {% for game in bought_games %}
-      <h2>{{game.name}}</h2>
-        <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+
+    {% for game in games %}
+
+      {% if game in user.games.all  %}
+
+        <h2>{{game.name}}</h2>
+        <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe><br>
         <a href="{% url 'game-detail' game.name %}">Play {{ game.name }}</a> <br>
-      <h3>Game developed by {{ game.developer }}</h3>
+        <h3>Game developed by {{ game.developer }}</h3>
+
+      {% endif %}
 
     {% endfor %}
-    <a href="{% url 'browse_games' %}"> Buy More Here!</a>
-  {% endif %}
+
+      <a href="{% url 'browse_games' %}"> Buy More Games Here!</a>
+
+    {% endif %}
 
 {% else %}
+
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>
   <a href="{% url 'signup' %}">register</a>
+
 {% endif %}
 {% endblock content %}
