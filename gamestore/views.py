@@ -100,6 +100,14 @@ def payment_cancel(request,pk):
     }
     return render(request, 'gamestore/detail.html', context)
 
+def payment_error(request,pk):
+    game=Game.objects.filter(name=pk).first()
+    context = {
+        'game': game,
+        'message': "Error occured during payment. Try again or contact us."
+    }
+    return render(request, 'gamestore/detail.html', context)
+
 def games_list(request):
     context = {
         'games' : Game.objects.all()
