@@ -2,11 +2,18 @@ body {
     background: pink ;
 }
 
-
 .navbar {
     border-radius: 0;
 }
 
 .navbar-brand {
     font-family: cursive;
+}
+
+.cont-1 {
+    padding-left: 30px;
+}
+
+#iframe {
+  background-color: white;
 }
