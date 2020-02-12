@@ -1,7 +1,6 @@
 body {
-    background: pink ;
+    background: green ;
 }
-
 
 .navbar {
     border-radius: 0;
@@ -9,4 +8,9 @@ body {
 
 .navbar-brand {
     font-family: cursive;
+}
+
+.cont-1 {
+    padding-left: 30px;
+
 }

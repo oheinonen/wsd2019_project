@@ -3,6 +3,9 @@
 {% block title %}Browse games{% endblock %}
 
 {% block content %}
+
+
+
 {% if user.is_authenticated %}
 <h1>Released games:</h1>
   {% for game in games %}
@@ -16,4 +19,5 @@
   <a href="{% url 'login' %}">login</a>
   <a href="{% url 'signup' %}">register</a>
 {% endif %}
+
 {% endblock content %}
