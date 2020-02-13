@@ -7,7 +7,7 @@ body {
 }
 
 .navbar-brand {
-    font-family: cursive;
+    font-family: bold;
 }
 
 .cont-1 {
@@ -16,4 +16,23 @@ body {
 
 #iframe {
   background-color: white;
+}
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background-color: hotpink;
+  color: black;
+  text-align: center;
+}
+
+.footer-text{
+  font-size: 10px ;
+  padding-top: 12px;
+  padding-bottom: 10px
+  text-align: center;
 }
