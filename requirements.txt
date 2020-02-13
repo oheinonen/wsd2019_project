@@ -2,5 +2,6 @@ django
 gunicorn
 django-heroku
 django-utils
+django-cors-headers
 requests
 social-auth-app-django
