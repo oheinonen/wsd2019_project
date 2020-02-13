@@ -3,7 +3,7 @@
 {% block title %}Buy {{ game }} {% endblock %}
 
 {% block content %}
-{% if user.usertype == "['player']" %}
+{% if user.usertype != "['developer']" %}
 
   {% if game not in user.games.all %}
 

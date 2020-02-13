@@ -11,7 +11,7 @@
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'game-update' game.name %}">Update</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'game-delete' game.name %}">Delete</a>
 
-  {% elif user.usertype == "['player']" %}
+  {% elif user.usertype != "['developer']" %}
 
     {% if game in user.games.all  %}
 
