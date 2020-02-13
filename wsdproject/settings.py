@@ -123,4 +123,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL='users.CustomUser'
 LOGIN_REDIRECT_URL = 'home'
+EMAIL_USE_TLS=True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wsd2019.test@gmail.com'
+EMAIL_HOST_PASSWORD = 'admin123!'
+EMAIL_PORT = 587
 django_heroku.settings(locals())
