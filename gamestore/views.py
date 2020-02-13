@@ -129,6 +129,14 @@ class BrowseGamesView(ListView):
     template_name = 'gamestore/browse_games.html'
     context_object_name = 'games'
 
+    def get_context_data(self, **kwargs):
+        context = super(BrowseGamesView, self).get_context_data(**kwargs)
+        context.update({
+            'browse_page' : 'active'
+        })
+        return context
+
+
 class SearchGamesView(ListView):
     model = Game
     template_name = 'gamestore/search.html'
