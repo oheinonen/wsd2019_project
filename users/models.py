@@ -12,3 +12,6 @@ class CustomUser(AbstractUser):
     usertype = models.CharField(max_length=10)
     games = models.ManyToManyField('gamestore.Game')
     test = models.CharField(max_length=10, choices=usertypes)
+
+    def __str__(self):
+        return self.username

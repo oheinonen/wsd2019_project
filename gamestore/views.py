@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from .models import Game,Highscore, GameSession, Transaction
 from users.models import CustomUser
+from django.db.models import Q
 from hashlib import md5
 from django.views.generic import (
     ListView,
@@ -16,10 +17,12 @@ import requests
 
 def home(request):
     context = {
-        'games' : Game.objects.all(),
+        'games' :Game.objects.all(),
         'home_page' : 'active'
     }
+
     return render(request, "home.html", context)
+
 
 def buy(request, pk):
     template_name = 'gamestore/buy.html'
@@ -121,12 +124,26 @@ def payment_error(request,pk):
     url = request.build_absolute_uri(game.get_absolute_url())
     return render(url, context)
 
-def games_list(request):
-    context = {
-        'games' : Game.objects.all(),
-        'browse_page' : 'active'
-    }
-    return render(request, 'gamestore/browse_games.html', context)
+class BrowseGamesView(ListView):
+    model = Game
+    template_name = 'gamestore/browse_games.html'
+    context_object_name = 'games'
+
+class SearchGamesView(ListView):
+    model = Game
+    template_name = 'gamestore/search.html'
+    context_object_name = 'games'
+
+    def get_queryset(self):
+        if self.request.method=='GET':
+            q = self.request.GET.get('q')
+            games = Game.objects.filter(
+                Q(name__icontains=q)
+                ).distinct()
+        else:
+            games = Game.objects.all()
+        return games
+
 
 class HighscoreListView(ListView):
     model = Highscore
