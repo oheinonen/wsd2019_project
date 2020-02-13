@@ -2,3 +2,4 @@ django
 gunicorn
 django-heroku
 requests
+social-auth-app-djang

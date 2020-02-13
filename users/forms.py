@@ -7,15 +7,17 @@ usertypes = (
     ("player", "player")
 )
 
+
 class CustomUserCreationForm(UserCreationForm):
     usertype = forms.MultipleChoiceField(choices=usertypes)
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email','usertype')
+        fields = ('username', 'email', 'usertype')
+
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email','usertype')
+        fields = ('username', 'email', 'usertype')
