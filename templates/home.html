@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
@@ -13,7 +14,6 @@
 
       <h2>{{game.name}}</h2>
 
-      <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe><br>
       <a href="{% url 'game-detail' game.name %}"> Visit {{ game.name }} detail page</a> <br>
 
     {% endif %}
@@ -28,15 +28,15 @@
 
         <h2>{{game.name}}</h2>
 
-        <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe><br>
         <a href="{% url 'game-detail' game.name %}">Play {{ game.name }}</a> <br>
-        <h3>Game developed by {{ game.developer }}</h3>
+        <p>Game developed by {{ game.developer }}</p>
 
       {% endif %}
 
     {% endfor %}
+      <h2>Want to play more games?</h2>
 
-      <a href="{% url 'browse_games' %}"> Buy More Games Here!</a>
+      <a href="{% url 'browse_games' %}"> Buy More Here!</a>
 
     {% endif %}
 
