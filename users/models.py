@@ -10,7 +10,7 @@ usertypes = (
 
 
 class CustomUser(AbstractUser):
-    usertype = models.CharField(max_length=10,default="player")
+    usertype = models.CharField(max_length=10,default="['player']")
     games = models.ManyToManyField('gamestore.Game')
     test = models.CharField(max_length=10, choices=usertypes)
 

@@ -20,7 +20,7 @@
 
         <h5>Price: {{ game.price }}</h5>
 
-        {% if user.usertype != "['developer']" %}
+        {% if user.usertype == "['player']" %}
           <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
         {%endif%}
 
