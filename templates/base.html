@@ -37,8 +37,10 @@
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li>
-            <form action="{% url 'search' %}" method="get">
-              <input type="text" class="form-control" id="id_q" name="q" placeholder="Search...">
+            <form action="{% url 'search' %}" method="get" id="navBarSearchForm">
+              <div class="active-pink-3 active-pink-4 mb-4">
+                <input type="text" class="form-control" id="id_q" name="q" placeholder="Search...">
+              </div>
             </form>
           </li>
           <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
