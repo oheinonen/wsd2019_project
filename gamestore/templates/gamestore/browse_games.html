@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+ {% extends 'base.html' %}
 
 {% block title %}Browse games{% endblock %}
 
@@ -6,23 +6,43 @@
 
 {% if user.is_authenticated %}
 
-  <h1>Released games:</h1>
+{% if games %}
+  <h1 class=""><strong>Released games</strong></h1>
+
   {% for game in games %}
+    <div class="container">
 
-      <h3>{{ game.name }}</h3>
-      <h5>Price: {{ game.price }}</h5>
-      <h5>Game developed by {{ game.developer }}</h5>
-      
-    {% if game not in user.games.all  %}
-      <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+        <h3>{{ game.name }}</h3>
 
-    {% endif %}
+        <h5>Game developed by {{ game.developer }}</h5>
+
+      {% if game not in user.games.all  %}
+
+        <h5>Price: {{ game.price }}</h5>
+
+        {% if user.usertype == "['player']" %}
+          <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+        {%endif%}
+        
+      {% else  %}
+
+        <h5>You already own this game</h5>
+
+      {% endif %}
+
+    </div>
   {% endfor %}
-
 {% else %}
+  <div class="">
+
+  </div>
+{% endif %}
+{% else %}
+
   <p>Log in to browse our games!</p>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'signup' %}">register</a>
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'signup' %}">Register</a>
+
 {% endif %}
 
 {% endblock content %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Add New Game {% endblock %}
+{% block title %} Game {% endblock %}
 
 {% block content %}
 
-<h2>Add new game to website</h2>
+<h2>Fill in game information</h2>
 <form method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Add game">
+    <input type="submit" value="Release!">
 </form>
 
 {% endblock %}

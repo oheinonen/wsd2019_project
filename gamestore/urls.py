@@ -5,6 +5,8 @@ from .views import (
     GameCreateView,
     GameDeleteView,
     GameUpdateView,
+    BrowseGamesView,
+    SearchGamesView,
     UserGameListView,
     HighscoreListView
     )
@@ -25,6 +27,7 @@ urlpatterns = [
     path('game/<str:pk>/load/', views.loadgame,name='loadgame' ),
     path('game/<str:pk>/update/',GameUpdateView.as_view(),name='game-update'),
     path('game/<str:pk>/delete/',GameDeleteView.as_view(),name='game-delete'),
-    path('browsegames/',views.games_list, name='browse_games' ),
+    path('browsegames/',BrowseGamesView.as_view(), name='browse_games' ),
+    path('search/',SearchGamesView.as_view(), name='search' ),
     path('highscores/',HighscoreListView.as_view(),name='highscores' )
 ]

@@ -1,10 +1,23 @@
 {% extends "base.html" %}
+{% block title %} Your Sales Stats {% endblock %}
 
 {% block content%}
 
   {% for game in games %}
-    <p>Game {{ game.name }} Sales</p>
-    {{game.name}} is sold {{ game.sales }} time(s)!
+
+    <h1><strong>Game {{ game.name }} Sales</strong></h1>
+    <p>{{game.name}} is sold {{ game.sales }} time(s)!</p>
+
+    <h5>Different transactions: </h5>
+    <ul>
+
+    {% for transaction in transactions %}
+      {% if transaction.game.developer == user %}
+        <li>{{transaction.time}}</li>
+      {% endif %}
+    {% endfor %}
+
+    </ul>
   {% endfor %}
 
 {% endblock content%}

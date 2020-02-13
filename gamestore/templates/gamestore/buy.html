@@ -3,21 +3,31 @@
 {% block title %}Buy {{ game }} {% endblock %}
 
 {% block content %}
-{% if game not in user.games.all %}
-  <h2>Buy {{ game }}</h2>
-    <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="pid" value={{transaction.id}}>
-      <input type="hidden" name="sid" value="6aBk9HRlc3RTZWxsZXI=">
-      <input type="hidden" name="amount" value={{game.price}}>
-      <input type="hidden" name="success_url" value={{successurl}}>
-      <input type="hidden" name="cancel_url" value={{cancelurl}}>
-      <input type="hidden" name="error_url" value={{errorurl}}>
-      <input type="hidden" name="checksum"value={{checksum}}>
-      Amount to be paid {{ game.price }}
-      <input type="submit" value="Pay">
-    </form>
+{% if user.usertype == "['player']" %}
+
+  {% if game not in user.games.all %}
+
+    <h2>Buy {{ game }}</h2>
+      <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="pid" value={{transaction.id}}>
+        <input type="hidden" name="sid" value="6aBk9HRlc3RTZWxsZXI=">
+        <input type="hidden" name="amount" value={{game.price}}>
+        <input type="hidden" name="success_url" value={{successurl}}>
+        <input type="hidden" name="cancel_url" value={{cancelurl}}>
+        <input type="hidden" name="error_url" value={{errorurl}}>
+        <input type="hidden" name="checksum"value={{checksum}}>
+        Amount to be paid {{ game.price }}
+        <input type="submit" value="Pay">
+      </form>
+
+  {% else %}
+    <h1>You have already bought this game!</h1>
+  {% endif %}
 {% else %}
-  <h1>You have already bought this game!</h1>
+
+  <h1>Developers can't buy games!</h1>
+
+
 {% endif %}
 {% endblock %}
