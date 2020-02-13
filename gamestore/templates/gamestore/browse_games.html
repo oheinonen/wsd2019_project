@@ -19,8 +19,11 @@
       {% if game not in user.games.all  %}
 
         <h5>Price: {{ game.price }}</h5>
-        <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
 
+        {% if user.usertype == "['player']" %}
+          <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+        {%endif%}
+        
       {% else  %}
 
         <h5>You already own this game</h5>
