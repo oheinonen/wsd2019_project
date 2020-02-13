@@ -17,3 +17,20 @@ body {
 #iframe {
   background-color: white;
 }
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  background-color: hotpink;
+  color: black;
+  text-align: center;
+}
+
+.footer-text{
+  padding-top: 15px;
+  text-align: center;
+}
