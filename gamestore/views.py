@@ -143,11 +143,13 @@ class SearchGamesView(ListView):
     context_object_name = 'games'
 
     def get_queryset(self):
+        games = []
         if self.request.method=='GET':
             q = self.request.GET.get('q')
-            games = Game.objects.filter(
+            games += Game.objects.filter(
                 Q(name__icontains=q)
                 ).distinct()
+
         else:
             games = Game.objects.all()
         return games
@@ -183,7 +185,6 @@ class UserGameListView(ListView):
         context.update({
             'transactions': Transaction.objects.all(),
             'sales_stats_page' : 'active'
-
         })
         return context
 
