@@ -28,7 +28,7 @@
 
         <h2>{{game.name}}</h2>
 
-        <a href="{% url 'game-detail' game.name %}">Play {{ game.name }}</a> <br>
+        <a href="{% url 'game-detail' game.name %}" class="btn btn-default">Play {{ game.name }}</a> <br>
         <p>Game developed by {{ game.developer }}</p>
 
       {% endif %}
@@ -36,15 +36,15 @@
     {% endfor %}
       <h2>Want to play more games?</h2>
 
-      <a href="{% url 'browse_games' %}"> Buy More Here!</a>
+      <a href="{% url 'browse_games' %}" class="btn btn-default"> Buy More Here!</a>
 
     {% endif %}
 
 {% else %}
 
   <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'signup' %}">register</a>
+  <a href="{% url 'login' %}" class="btn btn-default">login</a>
+  <a href="{% url 'signup' %}" class="btn btn-default">register</a>
 
 {% endif %}
 {% endblock content %}
