@@ -6,6 +6,10 @@
 {% block content %}
 {% if user.is_authenticated %}
 
+<h1><strong>Welcome!</strong></h1>
+<div class="cont-2">
+
+
   {% if user.usertype == "['dev']" %}
 
   {% for game in games %}
@@ -39,6 +43,7 @@
       <a href="{% url 'browse_games' %}" class="btn btn-default"> Buy More Here!</a>
 
     {% endif %}
+</div>
 
 {% else %}
 

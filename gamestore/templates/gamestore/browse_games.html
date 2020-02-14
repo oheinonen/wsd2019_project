@@ -8,11 +8,12 @@
 
 {% if games %}
   <h1 class=""><strong>Released games</strong></h1>
-
+  <div class="cont-2">
   {% for game in games %}
-    <div class="container">
 
-        <h3>{{ game.name }}</h3>
+
+
+        <h2>{{ game.name }}</h2>
 
         <h5>Game developed by {{ game.developer }}</h5>
 
@@ -31,8 +32,8 @@
 
       {% endif %}
 
-    </div>
   {% endfor %}
+  </div>
 {% else %}
   <div class="">
 

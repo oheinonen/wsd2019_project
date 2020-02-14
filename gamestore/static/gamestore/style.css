@@ -50,3 +50,8 @@ body {
   color: hotpink;
   background: lightblue;
 }
+
+.cont-2 {
+    padding-left: 60px;
+    padding-bottom: 40px;  /*keeps the text from going behind the footer*/
+}
