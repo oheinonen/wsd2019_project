@@ -5,18 +5,18 @@ body {
 .navbar {
     border-radius: 0;
 }
-
+/* the logo*/
 .navbar-brand {
     font-family: bold;
 }
 
 .cont-1 {
     padding-left: 30px;
-    padding-bottom: 40px;
+    padding-bottom: 40px;  /*keeps the text from going behind the footer*/
 }
 
 #iframe {
-  background-color: white;
+  background-color: white; /*the background of the games*/
 }
 
 #navBarSearchForm input {
@@ -28,7 +28,7 @@ body {
     outline: none !important;
     border:1px solid pink;
 }
-.footer {
+.footer {          /*keeps the footer at the bottom */
   position: fixed;
   left: 0;
   bottom: 0;
