@@ -1,19 +1,21 @@
 body {
-    background: #A6EBC9 ;
+    background: #1F2833 ;
     display: flex;
     flex-direction: column;
     position: relative;
     min-height: 100vh;
-    color: #393424 ;
+    color: #66FCF1 ;
 }
 
 .navbar {
     border-radius: 0;
-    background: #393424;
+    background: #0B0C10;
+    color: #66FCF1;
 }
 /* the logo*/
 .navbar-brand {
     font-family: bold;
+    text-decoration-color: #66FCF1;
 }
 
 .cont-1 {
@@ -24,7 +26,7 @@ body {
 }
 
 #iframe {
-  background-color: white; /*the background of the games*/
+  background-color: #66FCF1 ; /*the background of the games*/
 }
 
 #navBarSearchForm input {
@@ -51,7 +53,7 @@ body {
   bottom: 0;
   height: 40px;
   width: 100%;
-  background-color: #61FF7E;
+  background-color: #45A29E;
   color: black;
   text-align: center;
   margin-top: auto;
@@ -65,8 +67,8 @@ body {
 }
 
 .btn {  /* button stling */
-  color: #393424;
-  background: #5EEB5B;
+  color: #45A29E;
+  background: #0B0C10;
 }
 
 .cont-2 {
