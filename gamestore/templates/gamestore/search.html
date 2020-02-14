@@ -19,7 +19,7 @@
      {% if game not in user.games.all  %}
 
        <h5>Price: {{ game.price }}</h5>
-       <a href="{% url 'buy' game.name %}"  method="post">Buy Game Here</a>
+       <a href="{% url 'buy' game.name %}" class="btn btn-default" method="post">Buy Game Here</a>
 
      {% else  %}
 
@@ -37,8 +37,8 @@
 {% else %}
 
  <p>Log in to Search!</p>
- <a href="{% url 'login' %}">Login</a>
- <a href="{% url 'signup' %}">Register</a>
+ <a href="{% url 'login' %}" class="btn btn-default">Login</a>
+ <a href="{% url 'signup' %}" class="btn btn-default">Register</a>
 
 {% endif %}
 
