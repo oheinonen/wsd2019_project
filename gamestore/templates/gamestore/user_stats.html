@@ -3,12 +3,16 @@
 
 {% block content%}
 
+<h1><strong>Sales stats of your games:</strong></h1>
+
+<div class="cont-2">
+
   {% for game in games %}
 
-    <h1><strong>Game {{ game.name }} Sales</strong></h1>
-    <p>{{game.name}} is sold {{ game.sales }} time(s)!</p>
+    <h2><strong>Game {{ game.name }} Sales</strong></h2>
+    <p>{{game.name}} has been sold {{ game.sales }} time(s)!</p>
 
-    <h5>Different transactions: </h5>
+    <h5>Transactions: </h5>
     <ul>
 
     {% for transaction in transactions %}
@@ -19,5 +23,7 @@
 
     </ul>
   {% endfor %}
+
+  </div>
 
 {% endblock content%}

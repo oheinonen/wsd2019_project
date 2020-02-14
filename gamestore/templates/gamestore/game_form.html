@@ -4,11 +4,13 @@
 
 {% block content %}
 
-<h2>Fill in game information</h2>
+<h1><strong>Fill in game information</strong></h1>
+<div class="cont-2">
 <form method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Release!">
 </form>
+</div>
 
 {% endblock %}

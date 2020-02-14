@@ -18,11 +18,19 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
         <a class="navbar-brand" href="{% url 'home' %}">MEGACLIP</a>
       </div>
+      <div class="collapse navbar-collapse" id="topNavBar">
+
+
       <ul class="nav navbar-nav">
         <li class="nav-item {{ home_page }}"><a href="{% url 'home' %}">Home</a></li>
         <li class= "nav-item {{ browse_page }}"><a href="{% url 'browse_games'%}">Browse Games</a></li>
@@ -31,11 +39,6 @@
           {% if user.usertype == "['dev']" %}
           <li class= "nav-item {{ add_game_page }}"><a href="{% url 'game-add' %}">Add new game</a></li>
           <li class= "nav-item {{ sales_stats_page }}"><a href="{% url 'user-stats' user.username %}">View Sales Stats</a></li>
-          {% endif %}
-        {% endif %}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {% if user.is_authenticated %}
           <li>
             <form action="{% url 'search' %}" method="get" id="navBarSearchForm">
               <div class="active-pink-3 active-pink-4 mb-4">
@@ -43,12 +46,19 @@
               </div>
             </form>
           </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+
           <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         {% else %}
           <li class= "nav-item {{ signup_page }}"><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
           <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         {% endif %}
       </ul>
+    </div>
     </div>
   </nav>
   <main>

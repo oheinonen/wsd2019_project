@@ -1,5 +1,9 @@
 body {
     background: pink ;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
 }
 
 .navbar {
@@ -11,8 +15,10 @@ body {
 }
 
 .cont-1 {
-    padding-left: 30px;
-    padding-bottom: 40px;  /*keeps the text from going behind the footer*/
+    height: 100%;
+    padding-left: 30px;  /*keeps the text from going behind the footer*/
+    padding-bottom: 40px;
+    padding-top: 70px;
 }
 
 #iframe {
@@ -20,16 +26,25 @@ body {
 }
 
 #navBarSearchForm input {
-  position: relative;
+  position: center;
   width: 200px;
-  height: 50px;
+  height: 26px;
 }
+
+#navBarSearchForm {
+  position: center;
+  width: 200px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+
 #navBarSearchForm input:focus {
     outline: none !important;
     border:1px solid pink;
 }
 .footer {          /*keeps the footer at the bottom */
-  position: fixed;
+  position: absolute;
   left: 0;
   bottom: 0;
   height: 40px;
@@ -37,6 +52,7 @@ body {
   background-color: hotpink;
   color: black;
   text-align: center;
+  margin-top: auto;
 }
 
 .footer-text{
@@ -54,4 +70,42 @@ body {
 .cont-2 {
     padding-left: 60px;
     padding-bottom: 40px;  /*keeps the text from going behind the footer*/
+}
+
+
+@media (max-width: 991px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
 }
