@@ -4,10 +4,10 @@
 
 {% block content %}
 
-  <h2>List of Highscores </h2>
-
+  <h1><strong>List of Highscores </strong></h1>
+  <div class="cont-2">
   {% for game in games %}
-    <h1>{{ game.name }}</h1>
+    <h2>{{ game.name }}</h2>
     <ol>
       {% for score in highscores %}
 
@@ -16,9 +16,10 @@
             {{ score }}
           </li>
         {% endif %}
-        
+
       {% endfor %}
     </ol>
   {% endfor %}
+  </div>
 
 {% endblock %}
