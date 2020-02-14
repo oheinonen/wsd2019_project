@@ -29,5 +29,6 @@ urlpatterns = [
     path('game/<str:pk>/delete/',GameDeleteView.as_view(),name='game-delete'), #domain/game/snake/delete = delete the game
     path('browsegames/',BrowseGamesView.as_view(), name='browse_games' ), #domain/browsegames = browse available games
     path('search/',SearchGamesView.as_view(), name='search' ), #domain/search/ = search games
-    path('highscores/',HighscoreListView.as_view(),name='highscores' ) #domain/highscores = list of all highscores
+    path('highscores/',HighscoreListView.as_view(),name='highscores' ), #domain/highscores = list of all highscores
+    path('own_game/',views.ownGame,name='own_game' ) #domain/highscores = list of all highscores
 ]
