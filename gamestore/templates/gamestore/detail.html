@@ -6,7 +6,7 @@
   <h1>You are now playing {{ game.name }}</h1>
 
   {% if game.developer == user %}
-    <iframe id="iframe" src="{{ game.url }}" style="background: #FFFFFF;" width="" height=""></iframe>
+    <iframe id="iframe" src="{{ game.url }}" style="background: #FFFFFF;"></iframe>
     <br>
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'game-update' game.name %}">Update</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'game-delete' game.name %}">Delete</a>
@@ -23,9 +23,9 @@
 
             {% if message %}
               <!-- Pops alert window after a payment has occured -->
-              <iframe onload="showAlert('{{message}}')" id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+              <iframe onload="showAlert('{{message}}')" id="iframe" src="{{ game.url }}"></iframe>
             {% else %}
-              <iframe id="iframe" src="{{ game.url }}" width="" height=""></iframe>
+              <iframe id="iframe" src="{{ game.url }}" ></iframe>
             {% endif %}
           </div>
 

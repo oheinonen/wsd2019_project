@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <style>
+
+  </style>
+</head>
+
+
+<body onload="startGame()">
+  <script type="text/javascript">
+    var myGamePiece;
+    var myObstacles = [];
+    var myScore;
+    var score = 0;
+    var myBackground;
+    var items = [];
+    var playerItems = [];
+
+
+    function startGame() {
+      myGameArea.start();
+      document.getElementById("submitScoreButton").style.display= "none";
+      myScore = new component("20px", "Consolas", "black", 150, 30, "text");
+      myGamePiece = new component(30, 30, "blue", 135, 40);
+      myBackground = new component(300, 500, "{% static 'images/background.png' %}" , 0, 0, "background");
+
+    }
+
+    var myGameArea = {
+      canvas : document.createElement("canvas"),
+      start : function() {
+        this.canvas.width = 300;
+        this.canvas.height = 500;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+
+      },
+      // Clears old gamepieces from gamearea
+      clear : function() {
+      	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    	},
+        // Stop game
+      stop : function() {
+        clearInterval(this.interval);
+      }
+
+    };
+
+
+    function component(width, height, color, x, y, type) {
+      this.type = type;
+      if (type == "background" || type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+      }
+
+      this.width = width;
+      this.height = height;
+      this.x = x;
+      this.y = y;
+      this.speedX = 0;
+      this.speedY = 0;
+
+
+      this.update = function(){
+        var ctx = myGameArea.context;
+        if (this.type == "text") {
+          ctx.font = this.width + " " + this.height;
+          ctx.fillStyle = color;
+          ctx.fillText(this.text, this.x, this.y);
+        }
+        if (type == "image" || type == "background") {
+          ctx.drawImage(this.image,
+                        this.x,
+                        this.y,
+                        this.width, this.height);
+
+          if( type == "background"){
+            ctx.drawImage(this.image,
+                          this.x,
+                          this.y+ this.height,
+                          this.width, this.height);
+          }
+
+        }
+        else {
+          ctx.fillStyle = color;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+      };
+
+
+      // Changes gamepiece movement when left or right button or key is pressed
+        this.newPos = function() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.type == "background") {
+            if (this.y == -this.height) {
+              this.y = 0;
+            }
+          }
+        };
+
+        // Checks if gamepiece has crashed with obstacles
+
+          this.crashWith = function(otherobj) {
+            var myleft = this.x;
+            var myright = this.x + (this.width);
+            var mytop = this.y;
+            var mybottom = this.y + (this.height);
+            var otherleft = otherobj.x;
+            var otherright = otherobj.x + (otherobj.width);
+            var othertop = otherobj.y;
+            var otherbottom = otherobj.y + (otherobj.height);
+            var crash = true;
+            if ((mybottom < othertop) ||
+                (mytop > otherbottom) ||
+                (myright < otherleft) ||
+                (myleft > otherright)) {
+              crash = false;
+            }
+            return crash;
+          };
+          }
+
+
+
+    function updateGameArea() {
+      var x, y;
+
+      for (var i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+          myGameArea.stop();
+          document.getElementById("submitScoreButton").style.display= "block";
+          return;
+        }
+      }
+
+      for (i = 0; i < items.length; i += 1) {
+        if (myGamePiece.crashWith(items[i])) {
+          playerItems += items[i];
+          var index = items.indexOf[items[i]];
+          items.splice(index,1);
+          score += 500;
+        }
+      }
+
+      myGameArea.clear();
+      myGameArea.frameNo += 1;
+
+      myBackground.speedY = -2;
+      myBackground.newPos();
+      myBackground.update();
+
+      if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        y = myGameArea.canvas.height;
+        x = myGameArea.canvas.width;
+        var minWidth = 20;
+        var maxWidth = 100;
+        var width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
+        var minGap = 40;
+        var maxGap = 150;
+        var gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(width, 10, "green", 0, y));
+        myObstacles.push(new component(y - width - gap, 10, "green", width + gap, y));
+      }
+      for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].y += -2;
+        myObstacles[i].update();
+      }
+      if (myGameArea.frameNo == 1 || everyinterval(50)) {
+        x = myGameArea.canvas.width;
+        width = Math.floor(Math.random()*x);
+        items.push(new component(20,20, "{% static 'images/banana.png' %}",width ,myGameArea.canvas.height , "image"));
+      }
+
+      for (i = 0; i < items.length; i += 1) {
+        items[i].y += -2;
+        items[i].update();
+      }
+      score += Math.ceil(myGameArea.frameNo/100);
+
+      myScore.text = "SCORE: " + score;
+      myScore.update();
+      myGamePiece.newPos();
+      myGamePiece.update();
+
+    }
+
+    function moveleft() {
+      myGamePiece.speedX -= 2;
+    }
+
+    function moveright() {
+      myGamePiece.speedX += 2;
+    }
+
+    function stopMove() {
+      myGamePiece.speedX = 0;
+    }
+
+    function everyinterval(n) {
+      if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+      return false;
+    }
+
+
+
+    $(document).ready( function() {
+
+      $("#submit_score").click( function () {
+        var msg = {
+          "messageType": "SCORE",
+          "score": score
+        };
+        window.parent.postMessage(msg, "*");
+      });
+
+
+      $("#save").click( function () {
+        var msg = {
+          "messageType": "SAVE",
+          "gameState": {
+            "playerItems": playerItems,
+            "score": score
+          }
+        };
+        window.parent.postMessage(msg, "*");
+      });
+
+      $("#load").click( function () {
+        var msg = {
+          "messageType": "LOAD_REQUEST",
+        };
+        window.parent.postMessage(msg, "*");
+      });
+
+      window.addEventListener("message", function(evt) {
+        if(evt.data.messageType === "LOAD") {
+          var gameState = evt.data.gameState;
+          playerItems = gameState.playerItems;
+          score = parseFloat(gameState.score);
+        } else if (evt.data.messageType === "ERROR") {
+          alert(evt.data.info);
+        }
+      });
+
+      var message =  {
+        messageType: "SETTING",
+        options: {
+          "width": 310,
+          "height": 650
+        }
+      };
+      window.parent.postMessage(message, "*");
+
+    });
+
+  </script>
+
+
+  <div id="submitScoreButton" style=" padding-top: 10px; padding-left: 90px; display: block;">
+
+    <button id="submit_score">Submit Score</button>
+
+  </div>
+
+  <div class="" style=" padding-top: 10px; padding-left: 90px; display: block;">
+
+    <button onmousedown="moveleft()" onmouseup="stopMove()" ontouchstart="moveleft()">LEFT</button>
+    <button onmousedown="moveright()" onmouseup="stopMove()" ontouchstart="moveright()">RIGHT</button>
+
+  </div>
+
+  <div class="" style=" padding-top: 10px; padding-left: 90px; display: block;">
+
+    <button id="save" name="button">Save</button>
+    <button id="load" name="button">Load</button>
+
+  </div>
+
+  <div class="">
+    Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+  </div>
+
+</body>
+</html>

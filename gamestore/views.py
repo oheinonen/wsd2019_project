@@ -23,6 +23,9 @@ def home(request):
 
     return render(request, "home.html", context)
 
+def ownGame(request):
+    context = {}
+    return render(request,'own_game.html', context)
 
 def buy(request, pk):
     template_name = 'gamestore/buy.html'

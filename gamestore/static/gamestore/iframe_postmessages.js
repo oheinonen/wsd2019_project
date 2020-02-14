@@ -1,7 +1,8 @@
 function showAlert(data){
   alert(data);
-}
+};
 window.addEventListener('message', function(event) {
+
   switch (event.data.messageType) {
 
     case "SCORE":
@@ -48,9 +49,9 @@ window.addEventListener('message', function(event) {
           var msg = {
             "messageType": "LOAD",
             "gameState": JSON.parse(data)
-          }
+          };
 
-          document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+          document.getElementById('iframe').contentWindow.postMessage(msg, '*');
           alert(`You game is now loaded`);
         },
 
@@ -58,14 +59,16 @@ window.addEventListener('message', function(event) {
           var msg = {
             "messageType": "ERROR",
             "info": "Gamestate could not be loaded."
-          }
+          };
 
-          document.getElementById('iframe').contentWindow.postMessage(msg, '*')
+          document.getElementById('iframe').contentWindow.postMessage(msg, '*');
         }
       });
       break;
 
     case "SETTING":
+      $("#iframe").width(event.data.options.width);
+      $("#iframe").height(event.data.options.height);
       alert(`Game from ${event.origin} loaded.`);
       break;
   };
