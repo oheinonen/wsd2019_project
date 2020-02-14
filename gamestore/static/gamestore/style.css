@@ -46,7 +46,7 @@ body {
   text-align: center;
 }
 
-.btn {
+.btn {  /* button stling */
   color: hotpink;
   background: lightblue;
 }

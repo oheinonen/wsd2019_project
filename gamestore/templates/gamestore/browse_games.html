@@ -26,6 +26,7 @@
 
       {% else  %}
 
+        <a href="{% url 'game-detail' game.name %}" class="btn btn-default">Play {{ game.name }}</a> <br>
         <h5>You already own this game</h5>
 
       {% endif %}
