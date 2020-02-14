@@ -10,12 +10,17 @@ body {
 .navbar {
     border-radius: 0;
     background: #0B0C10;
+}
+
+.navbar-inverse .navbar-brand {
     color: #66FCF1;
 }
+
 /* the logo*/
 .navbar-brand {
     font-family: bold;
     text-decoration-color: #66FCF1;
+    color: #66FCF1:
 }
 
 .cont-1 {
