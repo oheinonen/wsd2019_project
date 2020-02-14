@@ -19,7 +19,7 @@
 
         <div class="row">
 
-          <div class="col-sm-6">
+          <div class="col-sm-9">
 
             {% if message %}
               <!-- Pops alert window after a payment has occured -->
@@ -29,7 +29,7 @@
             {% endif %}
           </div>
 
-            <div class="col-sm-6 ">
+            <div class="col-sm-3 ">
               <header><strong>{{game.name}} All-Time Highscores </strong></header>
               <ol>
                 {% for score in highscores %}
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <p>This game is developed by {{ game.developer }}</p>
+      <h4 class="header-developed-by">Developed by {{ game.developer }}</h4>
 
     {% else %}
 

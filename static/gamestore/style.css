@@ -118,3 +118,7 @@ body {
       display:block !important;
   }
 }
+
+.header-developed-by {
+  padding-left: 20px;
+}
