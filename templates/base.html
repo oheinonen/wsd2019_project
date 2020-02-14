@@ -35,17 +35,18 @@
         <li class="nav-item {{ home_page }}"><a href="{% url 'home' %}">Home</a></li>
         <li class= "nav-item {{ browse_page }}"><a href="{% url 'browse_games'%}">Browse Games</a></li>
         <li class= "nav-item {{ highscore_page }}"><a href="{% url 'highscores' %}">Highscores</a></li>
+        <li>
+          <form action="{% url 'search' %}" method="get" id="navBarSearchForm">
+            <div class="active-pink-3 active-pink-4 mb-4">
+              <input type="text" class="form-control" id="id_q" name="q" placeholder="Search...">
+            </div>
+          </form>
+        </li>
         {% if user.is_authenticated %}
           {% if user.usertype == "['dev']" %}
           <li class= "nav-item {{ add_game_page }}"><a href="{% url 'game-add' %}">Add new game</a></li>
           <li class= "nav-item {{ sales_stats_page }}"><a href="{% url 'user-stats' user.username %}">View Sales Stats</a></li>
-          <li>
-            <form action="{% url 'search' %}" method="get" id="navBarSearchForm">
-              <div class="active-pink-3 active-pink-4 mb-4">
-                <input type="text" class="form-control" id="id_q" name="q" placeholder="Search...">
-              </div>
-            </form>
-          </li>
+
           {% endif %}
         {% endif %}
       </ul>
