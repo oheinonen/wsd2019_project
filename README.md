@@ -1,8 +1,6 @@
+This repository is for Aalto University CS-C3170 - Web Software Development course project. The project was made in teams of three people.
+
 <h1>Final Submission</h1>
-
-<h3>Team</h3>
-
-Group: Valtteri Luodemäki 605845, Oskari Heinonen 605573, Jussi Huotari 353252
 
 <h3>Implemented features</h3>
 
