@@ -1,4 +1,4 @@
-This repository is for Aalto University CS-C3170 - Web Software Development course project. The project was made in teams of three people. Our creation is Megaclip, website where developers can add and sell games and where players can buy and play them. 
+This repository is for Aalto University CS-C3170 - Web Software Development course project. The project was made in teams of three people. Our creation is Megaclip, a website where developers can add and sell games and where players can buy and play them. 
 
 <h1>Final Submission</h1>
 
